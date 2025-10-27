@@ -1,5 +1,7 @@
 # 🛵 MOTTU - IoT Dashboard Integrado
 
+Link: https://mottooth-iot-dashboard.streamlit.app
+
 Dashboard desenvolvido para a **Sprint 4** da disciplina **Disruptive Architectures: IoT, IOB & Generative IA (FIAP / Mottu)**.  
 Este projeto integra dados de **IoT (motos e beacons)** com uma **API Java (Spring Boot + Oracle Cloud)**, exibindo métricas e visualizações em tempo real via **Streamlit**.
 
