@@ -1,126 +1,151 @@
+# 🛵 MOTTU - IoT Dashboard Integrado
 
-# MOTTOOTH - IoT e Visao Computacional
-### Sprint 3 - Sistema de Localizacao com Visao Computacional
-
----
-
-## Integrantes
-- Arthur Ramos dos Santos – RM558798
-- Felipe Melo de Sousa – RM556099
-- Robert Daniel da Silva Coimbra – RM555881
-
-**Turma:** 2TDSPW  
+Dashboard desenvolvido para a **Sprint 4** da disciplina **Disruptive Architectures: IoT, IOB & Generative IA (FIAP / Mottu)**.  
+Este projeto integra dados de **IoT (motos e beacons)** com uma **API Java (Spring Boot + Oracle Cloud)**, exibindo métricas e visualizações em tempo real via **Streamlit**.
 
 ---
 
-## Descricao do Projeto
-O desafio da Mottu e monitorar e mapear com precisao a localizacao das motos dentro de seus patios, que variam em tamanho e layout, em mais de 100 filiais no Brasil e no Mexico.  
-O processo atual e manual e impreciso, o que gera atrasos, falhas de controle e aumento de custos.  
+## 🚀 Funcionalidades
 
-Nossa solucao consiste em um **sistema inteligente de localizacao** que combina **sensores IoT, beacons BLE** e **visao computacional simulada** para:  
-- Mapear a posicao das motos em tempo real  
-- Registrar historico de movimentacoes  
-- Emitir alertas quando uma moto esta em local errado ou desaparecida  
-- Disponibilizar um **dashboard interativo** para visualizacao e gestao
+✅ Login autenticado via **JWT** na API Java  
+✅ Integração com os endpoints `/motos`, `/beacons` e `/localizacoes`  
+✅ Atualização automática de dados em tempo real  
+✅ Mapa interativo do pátio dividido por áreas (A, B, C, D)  
+✅ Dashboard escuro (dark mode) e responsivo  
+✅ Métricas, tabelas e visualizações dinâmicas integradas à API
 
 ---
 
-## Estrutura de Pastas
+## 🧠 Arquitetura da Solução
 
 ```
-projeto/
-│── mottu_vision_system.py     # Codigo principal do sistema
-│── requirements.txt            # Dependencias do projeto
-│── relatorio_tecnico_mottu.md  # Relatorio tecnico gerado automaticamente
-│── mottu_system.db             # Banco de dados SQLite (criado apos execucao)
+ESP32 / Simulador IoT
+        ↓  (HTTP POST)
+API Java (Spring Boot)
+        ↓  (JSON)
+Oracle Cloud Database
+        ↓
+Dashboard Streamlit (Python)
 ```
 
 ---
 
-## Tecnologias Utilizadas
-- **Python 3.8+**
-- **SQLite3** (banco de dados embarcado)
-- **Tkinter** (dashboard interativo)
-- **Threading** (processamento paralelo)
-- **NumPy e Pandas** (simulacao e manipulacao de dados)
-- **Random/UUID** (geracao de IDs e dados simulados)
+## 🗂️ Estrutura do Projeto
+
+```
+MOTTOOTH-IOT/
+│
+├── .streamlit/
+│   └── secrets.toml        # Variáveis seguras (opcional)
+│
+├── 2TDSPW_2025_IOT.py      # Dashboard principal (Streamlit)
+├── mottu_api.py            # Classe de integração com a API REST
+├── requirements.txt        # Dependências do projeto
+└── README.md               # Este arquivo
+```
 
 ---
 
-## Instalacao
+## ⚙️ Requisitos
 
-1. Clone o repositorio ou copie os arquivos para sua maquina  
+- Python 3.10+  
+- Pip atualizado (`python -m pip install --upgrade pip`)
+
+---
+
+## 🧩 Instalação e Execução Local
+
+1. Clone o repositório:
    ```bash
-   git clone <repositorio>
-   cd projeto
+   git clone https://github.com/fmelods/Mottooth-IOT.git
+   cd Mottooth-IOT
    ```
 
-2. Crie e ative um ambiente virtual (opcional, recomendado):  
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # Linux/Mac
-   venv\Scripts\activate    # Windows
-   ```
-
-3. Instale as dependencias:  
+2. Instale as dependências:
    ```bash
    pip install -r requirements.txt
    ```
 
----
-
-## Execucao
-
-1. Execute o sistema principal:  
+3. Execute o dashboard:
    ```bash
-   python mottu_vision_system.py
+   streamlit run 2TDSPW_2025_IOT.py
    ```
 
-2. O sistema ira:  
-   - Criar automaticamente o banco **SQLite**  
-   - Gerar dados historicos simulados  
-   - Executar casos de teste (moto desaparecida, moto em lugar errado, tempo real)  
-   - Abrir o **dashboard interativo** para acompanhamento em tempo real  
+4. Acesse no navegador:
+   ```
+   http://localhost:8501
+   ```
 
 ---
 
-## Uso do Sistema
+## 🔐 Variáveis de Configuração (opcional)
 
-- **Mapa do patio**: mostra a posicao das motos e cameras  
-- **Lista de motos**: exibe informacoes atualizadas sobre cada moto detectada  
-- **Alertas**: lista alertas de motos em local errado ou desaparecidas  
-- **Historico**: gera relatorios de movimentacao por periodo  
+No arquivo `.streamlit/secrets.toml`, você pode definir:
 
----
+```toml
+API_URL = "https://mottooth-java-1.onrender.com"
+USERNAME = "admin@ex.com"
+PASSWORD = "fiap25"
+```
 
-## Casos de Uso Implementados
-
-- **Deteccao de moto desaparecida**: alerta se a moto nao e vista ha mais de 2 minutos  
-- **Deteccao de moto em lugar errado**: alerta se moto esta fora da area designada  
-- **Monitoramento em tempo real**: atualizacao continua das posicoes  
-- **Historico de movimentacoes**: todas as movimentacoes ficam registradas no banco
+Esses valores são lidos automaticamente pelo Streamlit para autenticação na API.
 
 ---
 
-## Metricas Simuladas
+## 🌐 Deploy no Streamlit Cloud
 
-- Taxa de deteccao: ~95%  
-- Precisao media: ~0.85  
-- Tempo medio de resposta: ~1.2s  
-- FPS: 30 por camera  
+1. Acesse [streamlit.io](https://share.streamlit.io)  
+2. Clique em **New App**
+3. Configure:
+   - **Repository:** `fmelods/Mottooth-IOT`
+   - **Branch:** `main`
+   - **Main file path:** `2TDSPW_2025_IOT.py`
+4. Clique em **Deploy**
+
+O app ficará disponível em um link como:
+
+```
+https://fmelods-mottooth-iot.streamlit.app
+```
 
 ---
 
-## Proximos Passos
+## 📊 Visual do Dashboard
 
-- Integracao com modelo **YOLO real** para deteccao via camera  
-- API REST para acesso externo aos dados  
-- Dashboard web (React ou Vue)  
-- Analise preditiva para manutencao preventiva  
-- Escalabilidade com conteinerizacao (Docker/Kubernetes)  
+### 🔹 Painel Principal
+- Métricas em tempo real (Motos, Beacons, Localizações, Status)
+- Mapa do pátio com áreas A, B, C e D
+- Tabelas detalhadas sincronizadas com a API
+
+### 🔹 Layout
+Interface moderna e minimalista com modo escuro e atualização automática a cada intervalo configurável.
 
 ---
 
-## Status
-**Versao do Sistema:** 1.0.0  
-**Situacao:** Prototipo funcional com simulacao de visao computacional
+## 🧱 Tecnologias Utilizadas
+
+| Camada | Tecnologia |
+|:--|:--|
+| Frontend Dashboard | Streamlit + Plotly |
+| Backend API | Java Spring Boot |
+| Banco de Dados | Oracle Cloud |
+| Integração IoT | Python (simuladores e scripts) |
+
+---
+
+## 👨‍💻 Integrantes
+
+| Nome | RM | Função |
+|------|----|--------|
+| **Arthur Ramos dos Santos** | RM558798 | Lógica de detecção e interface de dashboard |
+| **Felipe Melo de Sousa** | RM556099 | Integração com API Java e Oracle Cloud |
+| **Robert Daniel da Silva Coimbra** | RM555881 | Arquitetura IoT e simulação de dispositivos |
+
+---
+
+## 🏁 Status do Projeto
+✅ **Finalizado e funcional** — pronto para entrega da **Sprint 4 (FIAP / Mottu)**.
+
+---
+
+> Projeto acadêmico desenvolvido na **FIAP** em parceria com a **Mottu**, como parte do desafio de integração entre **IoT + Backend + Cloud + Dashboard**.
